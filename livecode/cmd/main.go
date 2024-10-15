@@ -1,12 +1,16 @@
 package main
 
 import (
-	"fmt"
+	"livecode/internal/pkg/server"
+	"livecode/internal/pkg/storage"
 )
 
 func main() {
-	x := any(5)
-	fmt.Println(x)
-	x = any("string")
-	fmt.Println(x)
+	store, err := storage.NewStorage()
+	if err != nil {
+		panic(err)
+	}
+
+	s := server.New(":8090", &store)
+	s.Start()
 }
