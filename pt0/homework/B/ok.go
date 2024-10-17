@@ -1,6 +1,10 @@
 package b
 
 func isOK(s []int) bool {
-	_ = s[0]
-	return true
+	for _, v := range s {
+		if v == 0 {
+			return true
+		}
+	}
+	return false
 }
