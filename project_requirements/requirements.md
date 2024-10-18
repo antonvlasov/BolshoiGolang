@@ -183,7 +183,7 @@ RPOP list1 2 -2
 5)3
 
 RPOP list1
-1
+8
 ```
 
 ### LSET key index element
