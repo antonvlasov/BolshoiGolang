@@ -1,0 +1,8 @@
+services:
+  basic_server:
+    image: basic_server:0.0.1
+    container_name: docker-server
+    ports:
+      - "7500:7500"
+    environment:
+    - BASIC_SERVER_PORT=7500

@@ -1,0 +1,7 @@
+FROM golang:1.21-bullseye
+WORKDIR /app
+COPY . .
+# debug!
+RUN ls
+RUN go build -o /app/echo /app/cmd/echo/
+ENTRYPOINT ["./echo","defaultvalue"]

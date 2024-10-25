@@ -1,9 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
-	"time"
+	"os"
 
 	types "livecode/internal/pkg/basic_http"
 
@@ -11,10 +12,15 @@ import (
 )
 
 func main() {
+	serverPort, ok := os.LookupEnv("BASIC_SERVER_PORT")
+	if !ok {
+		fmt.Println("not port provided")
+		os.Exit(1)
+	}
+
 	engine := gin.New()
 
 	engine.GET("/health/", func(ctx *gin.Context) {
-		time.Sleep(30 * time.Second)
 		ctx.Status(http.StatusNoContent)
 	})
 	engine.POST("/x2", func(ctx *gin.Context) {
@@ -31,9 +37,7 @@ func main() {
 		ctx.JSON(http.StatusOK, res)
 	})
 
-	go func() {
-		if err := engine.Run(":7500"); err != nil {
-			log.Fatal(err)
-		}
-	}()
+	if err := engine.Run(":" + serverPort); err != nil {
+		log.Fatal(err)
+	}
 }

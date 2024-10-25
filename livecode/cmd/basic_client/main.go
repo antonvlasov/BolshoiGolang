@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -21,6 +22,12 @@ func consumeResponse(r io.ReadCloser) {
 }
 
 func main() {
+	serverAddress, ok := os.LookupEnv("BASIC_CLIENT_SERVER_ADDRESS")
+	if !ok {
+		fmt.Println("server address not provided")
+		os.Exit(1)
+	}
+
 	//
 	// Init client.
 	//
@@ -33,7 +40,7 @@ func main() {
 	// GET request.
 	//
 
-	healthReq, err := http.NewRequestWithContext(ctx, "GET", "http://127.0.0.1:7500/health", nil)
+	healthReq, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("http://%s/health", serverAddress), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,33 +53,4 @@ func main() {
 	defer consumeResponse(resp.Body)
 
 	fmt.Println(resp.StatusCode)
-
-	// //
-	// // POST request.
-	// //
-
-	// x2Request := types.X2Request{
-	// 	Val: 2,
-	// }
-
-	// b, err := json.Marshal(x2Request)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// resp, err = cli.Post("http://127.0.0.1:7500/x2", "", bytes.NewReader(b))
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// defer consumeResponse(resp.Body)
-
-	// var x2Resp types.X2Response
-	// if err = json.NewDecoder(resp.Body).Decode(&x2Resp); err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// fmt.Println(x2Resp.Val)
-
-	// fmt.Println(resp.StatusCode)
 }
