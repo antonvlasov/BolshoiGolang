@@ -270,4 +270,4 @@ KEYS .*?
 
 ## Docker-compose
 
-Требуется поднимать наше приложение и его базу данных sqlite c помощью docker-compose.
+Требуется поднимать наше приложение и его базу данных Postgres c помощью docker-compose.
