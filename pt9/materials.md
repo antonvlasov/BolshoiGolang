@@ -3,6 +3,7 @@
 Пример прокта svelte + golang который был рассмотрен на занятии https://github.com/alankrantas/svelteapp-typescript-go
 Как включить прокси сервер для фронта:
 ![proxy](proxy.png)
+
 Как я запускал фронт который подцеплялся к отдельному беку при помощи прокси:
 ![proxy_start](proxy_start.png)
 
