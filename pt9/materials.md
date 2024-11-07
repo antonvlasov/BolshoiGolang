@@ -1,6 +1,7 @@
 # Интеграция с фронтендом
 Как сростить реакт приложение с голангом https://observiq.com/blog/embed-react-in-golang
 Пример прокта svelte + golang который был рассмотрен на занятии https://github.com/alankrantas/svelteapp-typescript-go
+
 Как включить прокси сервер для фронта:
 ![proxy](proxy.png)
 
