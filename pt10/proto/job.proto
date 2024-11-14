@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package streaming;
+
+option go_package = "internal/streaming/pb";
+
+enum State {
+	STATE_UNDEFINED = 0;
+	STATE_INIT = 1;
+	STATE_STARTUP = 2;
+	STATE_ACTIVE = 3;
+	STATE_SHUTDOWN = 4;
+	STATE_SHUTDOWN_PROCESSING = 5;
+	STATE_INACTIVE = 6;
+}
+  
+enum SourceType {
+	  TYPE_UNDEFINED = 0;
+	  TYPE_RTSP = 1;
+	  TYPE_VIDEO = 2;
+}
+
+message Source {
+    string url = 1;
+    SourceType source_type = 2;
+}
+
+message Job {
+    string id = 1;
+    State state = 2;
+    Source source = 3;
+}
+
+message Result {
+    string id = 1;
+    string url = 2;
+}
+
+message JobResult {
+    string id = 1;
+    repeated Result results = 4;
+}
