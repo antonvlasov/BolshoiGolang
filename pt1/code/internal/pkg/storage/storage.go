@@ -1,18 +1,13 @@
 package storage
 
 import (
+	"strconv"
+
 	"go.uber.org/zap"
 )
 
-type Value struct {
-	s string
-	d int
-	a any
-	b bool
-}
-
 type Storage struct {
-	innerString map[string]Value
+	innerString map[string]string
 	logger      *zap.Logger
 }
 
@@ -25,29 +20,35 @@ func NewStorage() (Storage, error) {
 	defer logger.Sync()
 	logger.Info("created new storage")
 
-
 	return Storage{
-		inner:  make(map[string]string),
-		logger: logger,
+		innerString: make(map[string]string),
+		logger:      logger,
 	}, nil
 }
 
 func (r Storage) Set(key, value string) {
-	r.inner[key] = value
+	r.innerString[key] = value
 
-	r.logger.Info("key set", zap.Any())
+	r.logger.Info("key set", zap.Any("Storage", r.innerString))
 	r.logger.Sync()
 }
 
 func (r Storage) Get(key string) *string {
-	res, ok := r.inner[key]
+	res, ok := r.innerString[key]
 	if !ok {
 		return nil
 	}
-
 	return &res
 }
 
-func sum[T int64 | uint64](x, y T) T {
-	return x + y
+func (r Storage) GetKind(key string) string {
+	value, ok := r.innerString[key]
+	if !ok {
+		return ""
+	}
+	_, err := strconv.Atoi(value)
+	if err == nil {
+		return "D"
+	}
+	return "S"
 }
